@@ -52,15 +52,109 @@ public class Main implements DS2Interface {
     	return array[input.length-1];
     }
 
-    
-    
-    
-    
-    @Override
-    public int matrix(int[][] input) {
-        return 0;
-    }
+   
 
+	int maxSubArray(int [] input){
+		int[] B = new int[input.length];
+		B[0]=max(input[0],0);
+		int m= B[0];
+		for(int i=1;i<input.length;i++){
+			B[i]=max(0,B[i-1]+input[i]);
+			m = max(m,B[i]);
+		}
+		return m;
+	}
+	
+	@Override
+	public int matrix(int[][] input){
+		if(input.length==0||input[0].length==0){
+			return 0;
+		}
+		return maxHorizontal(input)+maxDiagonal(input)+maxAntiDiagonal(input)+maxVertical(input);
+	}
+	
+	
+	int maxHorizontal(int[][] input){
+		int maxHorizontal = Integer.MIN_VALUE;
+		for(int i=0; i<input.length;i++){
+			int[] temp = new int[input[0].length];
+			for(int j=0; j<input[0].length;j++){
+				 temp[j]= input[i][j];
+			}
+			int maxSubArray = maxSubArray(temp);
+			if(maxSubArray>maxHorizontal){
+				maxHorizontal= maxSubArray;
+			}
+		}
+		return maxHorizontal;
+	}
+	
+	int maxVertical(int[][] input){
+		int maxVertical = Integer.MIN_VALUE;
+		for(int i=0; i<input[0].length;i++){
+			int[] temp = new int[input.length];
+			
+			for(int j=0; j<input.length;j++){
+				 temp[j]= input[j][i];
+			}
+			int maxSubArray = maxSubArray(temp);
+			if(maxSubArray>maxVertical){
+				maxVertical= maxSubArray;
+			}
+		}
+		return maxVertical;
+	}
+	
+	int maxAntiDiagonal(int[][] input){
+		int maxAntiDiagonal = Integer.MIN_VALUE;
+		int counter = 0;
+		int secondCounter = 0;
+		for(int i =0;i<(input.length*2)-1;i++){
+			if(i<input.length){
+				counter = i+1;
+			}
+			else{
+				counter = counter -1;
+				secondCounter +=1;
+			}
+			int [] temp = new int[counter];
+			for(int j=0;j<counter;j++){
+				temp[j]=input[input.length-counter+j-secondCounter][j+secondCounter];
+			}
+			int maxSubArray = maxSubArray(temp);
+			if(maxSubArray>maxAntiDiagonal){
+				maxAntiDiagonal= maxSubArray;
+			}
+		}
+		return maxAntiDiagonal;
+	}
+	
+	
+	int maxDiagonal(int[][] input){
+		int maxDiagonal = Integer.MIN_VALUE;
+		int counter = 0;
+		int secondCounter = 0;
+		for(int i =0;i<(input.length*2)-1;i++){
+			if(i<input.length){
+				counter = i+1;
+			}
+			else{
+				counter = counter -1;
+				secondCounter +=1;
+			}
+			int [] temp = new int[counter];
+			for(int j=0;j<counter;j++){
+				temp[j]= input[counter-1-j+secondCounter][j+secondCounter];
+			}
+			int maxSubArray = maxSubArray(temp);
+			if(maxSubArray>maxDiagonal){
+				maxDiagonal= maxSubArray;
+			}
+		}
+		return maxDiagonal;
+	}
+    
+    
 
     /* BEGIN UTIL FUNCTION. DO NOT TOUCH */
 
