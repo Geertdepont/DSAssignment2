@@ -39,30 +39,19 @@ public class Main implements DS2Interface {
 
     @Override
     public int dynamicRodCutting(int[] input) {
-//        int[] array = new int[input.length];
-//    	array[0]=0;
-//    	for(int i=0;i<input.length;i++){
-//    		int q = Integer.MIN_VALUE;
-//    		for(int j=0;j<i;j++){
-//    			q = max(q,(input[j]+array[i-j]));
-//    		}
-//    		array[i]=q;
-//    	}
-//    	
-//    	return array[input.length];
-    	return 4;
+        int[] array = new int[input.length];
+    	array[0]=0;
+    	for(int i=1;i<input.length;i++){
+    		int q = Integer.MIN_VALUE;
+    		for(int j=1;j<i+1;j++){
+    			q = max(q,(input[j]+array[i-j]));
+    		}
+    		array[i]=q;
+    	}
+    	
+    	return array[input.length-1];
     }
 
-//    Algorithm rodCuttingDP(p, n):
-//    	new array b[0 . . . n]
-//    	b[0] := 0
-//    	for j := 1 to n do
-//    	q := − ∞
-//    	for i := 1 to j do
-//    	q := max(q, p[i] + b[j − i])
-//    	b[j] := q
-//    	return b[n]
-//    
     
     
     
