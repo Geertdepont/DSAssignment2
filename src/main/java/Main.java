@@ -114,8 +114,8 @@ public class Main implements DS2Interface {
 				counter = i+1;
 			}
 			else{
-				counter = counter -1;
-				secondCounter +=1;
+				counter = counter -1; //to create a counter that goes up from 1 to input.length to 1 e.g. 1,2,3,2,1
+				secondCounter +=1; 
 			}
 			int [] temp = new int[counter];
 			for(int j=0;j<counter;j++){
