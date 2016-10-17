@@ -1,9 +1,7 @@
 import java.io.FileNotFoundException;
 
 public class Main implements DS2Interface {
-
-
-    /* Implement these methods */
+	//
 
     @Override
     public int recursiveRodCutting(int[] input) {
@@ -62,7 +60,8 @@ public class Main implements DS2Interface {
 		return m;
 	}
 	
-	int matrix2(int[][] input){
+	@Override
+	public int matrix(int[][] input){
 		if(input.length==0 || input[0].length==0){
 			return 0;
 		}
@@ -77,9 +76,7 @@ public class Main implements DS2Interface {
 				temp[j]=input[i][j];
 			}
 			int tempMaxSubRow=maxSubArray(temp);
-			if(tempMaxSubRow>result){
-				result=tempMaxSubRow;
-			}
+			result=max(tempMaxSubRow,result);
 		}
 		return result;
 	}
@@ -91,10 +88,8 @@ public class Main implements DS2Interface {
 			for(int j=0;j<input.length;j++){
 				temp[j]=input[j][i];
 			}
-			int tempMaxColumn=maxSubArray(temp);
-			if(tempMaxColumn>result){
-				result=tempMaxColumn;
-			}
+			int tempMaxSubColumn=maxSubArray(temp);
+			result=max(tempMaxSubColumn,result);
 		}
 		return result;
 	}
@@ -102,17 +97,13 @@ public class Main implements DS2Interface {
 	int maxSubDiagonal(int[][] input){
 		int result=0;
 		if(input.length!=0 && input[0].length!=0){
-			int numberOfDiagonals=input.length+input[0].length-1;
-			int maxLengthDiagonal=input.length<input[0].length ? input.length : input[0].length;
+			int numberOfDiagonals=input.length*2-1;
+			int maxLengthDiagonal=input.length;
 			int columnCounter=0;
 			int rowCounter=0;
 			for(int i=0;i<numberOfDiagonals;i++){
 				int[] temp;
-				if(columnCounter==0){
-					temp=new int[rowCounter<maxLengthDiagonal?rowCounter+1:maxLengthDiagonal];
-				}else{
-					temp=new int[maxLengthDiagonal-columnCounter];
-				}
+				temp=new int[columnCounter==0 ? rowCounter+1 : maxLengthDiagonal-columnCounter];
 				for(int j=0;j<temp.length;j++){
 					temp[j]=input[rowCounter-j][columnCounter+j];
 				}
@@ -122,7 +113,7 @@ public class Main implements DS2Interface {
 					columnCounter+=1;
 				}
 				int maxSubArray=maxSubArray(temp);
-				result=maxSubArray>result ? maxSubArray : result;
+				result=max(maxSubArray,result);
 			}
 		}
 		return result;
@@ -131,17 +122,13 @@ public class Main implements DS2Interface {
 	int maxSubAntiDiagonal(int[][] input){
 		int result=0;
 		if(input.length!=0 && input[0].length!=0){
-			int numberOfDiagonals=input.length+input[0].length-1;
-			int maxLengthDiagonal=input.length<input[0].length ? input.length : input[0].length;
+			int numberOfDiagonals=input.length*2-1;
+			int maxLengthDiagonal=input.length;
 			int columnCounter=input[0].length-1;//start at first row and last column
 			int rowCounter=0;
 			for(int i=0;i<numberOfDiagonals;i++){
 				int[] temp;
-				if(columnCounter==input[0].length-1){
-					temp=new int[rowCounter<maxLengthDiagonal?rowCounter+1:maxLengthDiagonal];
-				}else{
-					temp=new int[maxLengthDiagonal-(input[0].length-1-columnCounter)];
-				}
+				temp=new int[columnCounter==input[0].length-1 ? rowCounter+1 : maxLengthDiagonal-(input[0].length-1-columnCounter)];
 				for(int j=0;j<temp.length;j++){
 					temp[j]=input[rowCounter-j][columnCounter-j];
 				}
@@ -151,103 +138,12 @@ public class Main implements DS2Interface {
 					columnCounter-=1;
 				}
 				int maxSubArray=maxSubArray(temp);
-				result=maxSubArray>result ? maxSubArray : result;
+				result=max(maxSubArray,result);
 			}
 		}
 		return result;
 	}
 	
-	@Override
-	public int matrix(int[][] input){
-		if(input.length==0||input[0].length==0){
-			return 0;
-		}
-		return maxHorizontal(input)+maxDiagonal(input)+maxAntiDiagonal(input)+maxVertical(input);
-	}
-	
-	
-	int maxHorizontal(int[][] input){
-		int maxHorizontal = Integer.MIN_VALUE;
-		for(int i=0; i<input.length;i++){
-			int[] temp = new int[input[0].length];
-			for(int j=0; j<input[0].length;j++){
-				 temp[j]= input[i][j];
-			}
-			int maxSubArray = maxSubArray(temp);
-			if(maxSubArray>maxHorizontal){
-				maxHorizontal= maxSubArray;
-			}
-		}
-		return maxHorizontal;
-	}
-	
-	int maxVertical(int[][] input){
-		int maxVertical = Integer.MIN_VALUE;
-		for(int i=0; i<input[0].length;i++){
-			int[] temp = new int[input.length];
-			
-			for(int j=0; j<input.length;j++){
-				 temp[j]= input[j][i];
-			}
-			int maxSubArray = maxSubArray(temp);
-			if(maxSubArray>maxVertical){
-				maxVertical= maxSubArray;
-			}
-		}
-		return maxVertical;
-	}
-	
-	int maxAntiDiagonal(int[][] input){
-		int maxAntiDiagonal = Integer.MIN_VALUE;
-		int counter = 0;
-		int secondCounter = 0;
-		for(int i =0;i<(input.length*2)-1;i++){
-			if(i<input.length){
-				counter = i+1;
-			}
-			else{
-				counter = counter -1; //to create a counter that goes up from 1 to input.length to 1 e.g. 1,2,3,2,1
-				secondCounter +=1; 
-			}
-			int [] temp = new int[counter];
-			for(int j=0;j<counter;j++){
-				temp[j]=input[input.length-counter+j-secondCounter][j+secondCounter];
-			}
-			int maxSubArray = maxSubArray(temp);
-			if(maxSubArray>maxAntiDiagonal){
-				maxAntiDiagonal= maxSubArray;
-			}
-		}
-		return maxAntiDiagonal;
-	}
-	
-	
-	int maxDiagonal(int[][] input){
-		int maxDiagonal = Integer.MIN_VALUE;
-		int counter = 0;
-		int secondCounter = 0;
-		for(int i =0;i<(input.length*2)-1;i++){
-			if(i<input.length){
-				counter = i+1;
-			}
-			else{
-				counter = counter -1;
-				secondCounter +=1;
-			}
-			int [] temp = new int[counter];
-			for(int j=0;j<counter;j++){
-				temp[j]= input[counter-1-j+secondCounter][j+secondCounter];
-			}
-			int maxSubArray = maxSubArray(temp);
-			if(maxSubArray>maxDiagonal){
-				maxDiagonal= maxSubArray;
-			}
-		}
-		return maxDiagonal;
-	}
-    
-    
-
     /* BEGIN UTIL FUNCTION. DO NOT TOUCH */
 
 
