@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DS2Test" tests="10" skipped="0" failures="0" errors="0" timestamp="2016-10-21T11:47:41" hostname="Geerts-MacBook-Pro.local" time="1.055">
+  <properties/>
+  <testcase name="testBasicRecursiveRodNonIncreasing" classname="DS2Test" time="0.018"/>
+  <testcase name="testSimpleDynamicRod" classname="DS2Test" time="0.001"/>
+  <testcase name="testSimpleMatrix" classname="DS2Test" time="0.0"/>
+  <testcase name="testSimpleRecursiveRod" classname="DS2Test" time="0.001"/>
+  <testcase name="testBasicDynamicRodIncreasing" classname="DS2Test" time="0.002"/>
+  <testcase name="testEmptyMatrix" classname="DS2Test" time="0.001"/>
+  <testcase name="testNegativeMatrix" classname="DS2Test" time="0.0"/>
+  <testcase name="testBasicDynamicRodNonIncreasing" classname="DS2Test" time="0.002"/>
+  <testcase name="testLargeMatrix" classname="DS2Test" time="1.029"/>
+  <testcase name="testBasicRecursiveRodIncreasing" classname="DS2Test" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
